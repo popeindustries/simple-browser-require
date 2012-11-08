@@ -6,15 +6,12 @@
 	"keywords": ["javascript"],
 	"dependencies": {
 	},
-	"devDependencies": {
-		"should": "latest",
-		"mocha": "latest"
-	},
 	"main": "./require.js",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/popeindustries/browser-require.git"
 	},
+	"readme": "./README.md",
 	"_id": "browser-require@0.1.0",
 	"_from": "browser-require@~0.1"
 }
