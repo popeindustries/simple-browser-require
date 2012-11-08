@@ -1,0 +1,20 @@
+{
+	"name": "browser-require",
+	"description": "A simple, node-like require() for the browser.",
+	"version": "0.1.0",
+	"author": "popeindustries <alex@pope-industries.com>",
+	"keywords": ["javascript"],
+	"dependencies": {
+	},
+	"devDependencies": {
+		"should": "latest",
+		"mocha": "latest"
+	},
+	"main": "./require.js",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/popeindustries/browser-require.git"
+	},
+	"_id": "browser-require@0.1.0",
+	"_from": "browser-require@~0.1"
+}
