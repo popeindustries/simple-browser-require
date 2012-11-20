@@ -5,7 +5,7 @@
 	"author": "popeindustries <alex@pope-industries.com>",
 	"keywords": ["javascript", "modules"],
 	"dependencies": {},
-	"main": "./require.js",
+	"main": "require.js",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/popeindustries/browser-require.git"
