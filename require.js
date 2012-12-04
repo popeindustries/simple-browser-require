@@ -2,6 +2,10 @@
 	// Load or return cached version of requested module with id 'path' or 'path/index'
 	// @param {String} path
 	function require (path) {
+		// Convert relative path to absolute for cases where 'require' is called outside of a module
+		if (!this.module && path.charAt(0) == '.') {
+			path = path.slice(2)
+		}
 		// Find in cache
 		var m = require.modules[path] || require.modules[path += '/index'];
 		if (!m) {
