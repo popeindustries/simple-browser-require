@@ -1,8 +1,10 @@
 (function(root) {
 	// Load or return cached version of requested module with id 'path' or 'path/index'
 	// @param {String} path
+	// @return {Object}
 	function require (path) {
-		// Convert relative path to absolute for cases where 'require' is called outside of a module
+		// Convert relative path to absolute for cases where 'require' has not been resolved
+		// called from outside of a module, for example
 		if (!this.module && path.charAt(0) == '.') {
 			path = path.slice(2);
 		}
@@ -15,7 +17,7 @@
 		if (!m.exports) {
 			m.exports = {};
 			m.filename = path;
-			m.call(m.exports, m, m.exports, require.resolve(path));
+			m.call(this, m, m.exports, require.resolve(path));
 		}
 		// Return the exports object
 		return m.exports;
@@ -24,29 +26,37 @@
 	// Cache of module objects
 	require.modules = {};
 
+	// Normalize a 'path' relative to the current
+	// @param {String} curr
+	// @param {String} path
+	// @return {String}
+	require.normalize = function(curr, path) {
+		var segs = curr.split('/')
+			, seg;
+
+		// Non relative path
+		if (path.charAt(0) != '.') return path;
+
+		// Use 'from' path segments to resolve relative 'to' path
+		segs.pop();
+		path = path.split('/');
+		for (var i = 0; i < path.length; ++i) {
+			seg = path[i];
+			if (seg == '..') {
+				segs.pop();
+			} else if (seg != '.') {
+				segs.push(seg);
+			}
+		}
+		return segs.join('/');
+	}
+
 	// Partial completion of the module's inner 'require' function
-	// Resolves paths relative to the module's current location
+	// @param {String} path
+	// @return {Object}
 	require.resolve = function(path) {
 		return function(p) {
-			var part, paths, ps;
-			// Non relative path
-			if (p.charAt(0) !== '.') {
-				return require(p);
-			}
-			// Use the module's own path to resolve relative paths
-			paths = path.split('/');
-			paths.pop();
-			ps = p.split('/');
-			for (var i = 0, n = ps.length; i < n; i++) {
-				part = ps[i];
-				if (part === '..') {
-					paths.pop();
-				} else if (part !== '.') {
-					paths.push(part);
-				}
-			}
-			// Return resolved path
-			return require(paths.join('/'));
+			return require(require.normalize(path, p));
 		};
 	};
 
@@ -59,4 +69,4 @@
 
 	// Expose
 	root.require = require;
-})(this);
+})(global || window);
