@@ -5,7 +5,14 @@
 	"author": "popeindustries <alex@pope-industries.com>",
 	"keywords": ["javascript", "modules"],
 	"dependencies": {},
+	"devDependencies": {
+		"mocha": "*",
+		"should": "*"
+		},
 	"main": "require.js",
+	"scripts": {
+		"test": "mocha --reporter spec --require should -t 40000"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/popeindustries/browser-require.git"
