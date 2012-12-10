@@ -79,9 +79,13 @@ describe('require', function() {
 				module.exports = 'foo';
 			});
 			req('./foo').should.eql('foo');
-		})
+		});
+		it('should support lazy evaluation of modules as strings', function() {
+			req.register('foo', "module.exports = \'foo\';")
+			req('./foo').should.eql('foo');
+		});
 		it('should throw an error when called with an unrecognized path', function() {
 			req('foo').should.throw();
-		})
+		});
 	})
 })

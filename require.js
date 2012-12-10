@@ -15,6 +15,10 @@
 		}
 		// Instantiate the module if it's export object is not yet defined
 		if (!m.exports) {
+			// Convert 'lazy' evaluated string to Function
+			if ('string' == typeof m) {
+				m = require.modules[path] = new Function('module', 'exports', 'require', m)
+			}
 			m.exports = {};
 			m.filename = path;
 			m.call(this, m, m.exports, require.resolve(path));
