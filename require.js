@@ -73,4 +73,4 @@
 
 	// Expose
 	root.require = require;
-})(global || window);
+})(window != null ? window : global);
