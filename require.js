@@ -6,7 +6,7 @@
 		// Convert relative path to absolute for cases where 'require' has not been resolved
 		// called from outside of a module, for example
 		if (!this.module && path.charAt(0) == '.') {
-			path = path.slice(2);
+			path = path.slice((path.indexOf('..') == 0) ? 3 : 2);
 		}
 		// Find in cache
 		var m = require.modules[path] || require.modules[path += '/index'];
