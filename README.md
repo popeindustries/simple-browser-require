@@ -1,6 +1,6 @@
-# browser-require
+# simple-browser-require
 
-**browser-require** is a simple, node.js-like ```require()``` for the browser. It is not an asynchronous script loader.
+**simple-browser-require** is a simple, node.js-like ```require()``` for the browser. *It is not an asynchronous script loader*.
 
 ## Usage
 
