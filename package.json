@@ -1,9 +1,9 @@
 {
-	"name": "browser-require",
+	"name": "simple-browser-require",
 	"description": "A simple, node.js-like require() for the browser.",
 	"version": "0.1.4",
 	"author": "popeindustries <alex@pope-industries.com>",
-	"keywords": ["javascript", "modules"],
+	"keywords": ["javascript", "modules", "require"],
 	"dependencies": {},
 	"devDependencies": {
 		"mocha": "*",
@@ -11,12 +11,12 @@
 		},
 	"main": "require.js",
 	"scripts": {
-		"test": "mocha --reporter spec --require should -t 40000"
+		"test": "mocha --reporter spec --require should"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/popeindustries/browser-require.git"
 	},
 	"readmefile": "README.md",
-	"readme": "A simple, node.js-like require() for the browser."
+	"readme": "# browser-require\n\n**browser-require** is a simple, node.js-like ```require()``` for the browser. It is not an asynchronous script loader.\n\n## Usage\n\nWrapping each module in a ```require.register``` call:\n\n```javascript\nrequire.register('my/module/id', function(module, exports, require) {\n	// module code here\n});\n```\n\n...allows the ```require``` function to return the module's public contents:\n\n```javascript\nvar lib = require('my/module/id');\n```\n\n...exposed by decorating the ```exports``` object:\n\n```javascript\nvar myModuleVar = 'my module';\n\nexports.myModuleMethod = function() {\n  return myModuleVar;\n};\n```\n\n...or overwritting the ```exports``` object completely:\n\n```javascript\nfunction MyModule() {\n  this.myVar = 'my instance var';\n};\n\nMyModule.prototype.myMethod = function() {\n  return this.myVar;\n};\n\nmodule.exports = MyModule;\n```\n\nEach module is supplied with a ```require``` function that resolves relative module ids:\n\n```javascript\nvar lib = require('./my/lib'); // in current package\nvar SomeClass = require('../someclass'); // in parent package\nvar util = require('utils/util'); // from root package\n```\n"
 }
