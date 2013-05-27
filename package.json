@@ -1,7 +1,7 @@
 {
 	"name": "simple-browser-require",
 	"description": "A simple, node.js-like require() for the browser.",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"author": "popeindustries <alex@pope-industries.com>",
 	"keywords": ["javascript", "modules", "require"],
 	"dependencies": {},
