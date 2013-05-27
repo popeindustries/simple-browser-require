@@ -6,7 +6,7 @@
 		// Convert relative path to absolute for cases where 'require' has not been resolved
 		// called from outside of a module, for example
 		if (!this.module && path.charAt(0) == '.') {
-			path = path.slice((path.indexOf('..') == 0) ? 3 : 2);
+			path = path.slice((path.indexOf('..') === 0) ? 3 : 2);
 		}
 		// Find in cache
 		var m = require.modules[path] || require.modules[path += '/index'];
@@ -17,7 +17,7 @@
 		if (!m.exports) {
 			// Convert 'lazy' evaluated string to Function
 			if ('string' == typeof m) {
-				m = require.modules[path] = new Function('module', 'exports', 'require', m)
+				m = require.modules[path] = new Function('module', 'exports', 'require', m);
 			}
 			m.exports = {};
 			m.filename = path;
@@ -25,7 +25,7 @@
 		}
 		// Return the exports object
 		return m.exports;
-	};
+	}
 
 	// Cache of module objects
 	require.modules = {};
@@ -53,7 +53,7 @@
 			}
 		}
 		return segs.join('/');
-	}
+	};
 
 	// Partial completion of the module's inner 'require' function
 	// @param {String} path
@@ -68,7 +68,7 @@
 	// @param {String} path
 	// @param {Function} fn [signature should be of type (module, exports, require)]
 	require.register = function(path, fn) {
-		return require.modules[path] = fn;
+		require.modules[path] = fn;
 	};
 
 	// Expose
