@@ -8,8 +8,20 @@
 		if (!this.module && path.charAt(0) == '.') {
 			path = path.slice((path.indexOf('..') === 0) ? 3 : 2);
 		}
+		var paths = [path]
+			, segs = path.split('/')
+			, m;
+		// Handle special case for root modules that have no explicit package, unlike node_modules etc.
+		if (segs.length == 2) {
+			// Strip leading segment
+			paths.push(segs[1]);
+		}
 		// Find in cache
-		var m = require.modules[path] || require.modules[path += '/index'];
+		for (var i = 0, n = paths.length; i < n; i++) {
+			path = paths[i];
+			m = require.modules[path] || require.modules[path + '/index'];
+			if (m) break;
+		}
 		if (!m) {
 			throw "Couldn't find module for: " + path;
 		}
@@ -21,7 +33,7 @@
 			}
 			m.exports = {};
 			m.filename = path;
-			m.call(this, m, m.exports, require.resolve(path));
+			m.call(this, m, m.exports, require.relative(path));
 		}
 		// Return the exports object
 		return m.exports;
@@ -30,37 +42,38 @@
 	// Cache of module objects
 	require.modules = {};
 
-	// Normalize a 'path' relative to the current
+	// Resolve 'to' an absolute path
 	// @param {String} curr
 	// @param {String} path
 	// @return {String}
-	require.normalize = function(curr, path) {
-		var segs = curr.split('/')
+	require.resolve = function(from, to) {
+		var fromSegs = from.split('/')
 			, seg;
 
 		// Non relative path
-		if (path.charAt(0) != '.') return path;
+		if (to.charAt(0) != '.') return to;
 
+		// Don't strip root paths (handled specially in require())
+		if (fromSegs.length > 1) fromSegs.pop();
+		to = to.split('/');
 		// Use 'from' path segments to resolve relative 'to' path
-		segs.pop();
-		path = path.split('/');
-		for (var i = 0; i < path.length; ++i) {
-			seg = path[i];
+		for (var i = 0; i < to.length; ++i) {
+			seg = to[i];
 			if (seg == '..') {
-				segs.pop();
+				fromSegs.pop();
 			} else if (seg != '.') {
-				segs.push(seg);
+				fromSegs.push(seg);
 			}
 		}
-		return segs.join('/');
+		return fromSegs.join('/');
 	};
 
 	// Partial completion of the module's inner 'require' function
 	// @param {String} path
 	// @return {Object}
-	require.resolve = function(path) {
+	require.relative = function(path) {
 		return function(p) {
-			return require(require.normalize(path, p));
+			return require(require.resolve(path, p));
 		};
 	};
 
