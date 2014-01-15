@@ -8,14 +8,9 @@
 		if (!this.module && path.charAt(0) == '.') {
 			path = path.slice((path.indexOf('..') === 0) ? 3 : 2);
 		}
-		var paths = [path]
-			, segs = path.split('/')
+		// Check with/without root package (need to handle node_modules differently)
+		var paths = [path, path.slice(path.indexOf('/') + 1)]
 			, m;
-		// Handle special case for root modules that have no explicit package, unlike node_modules etc.
-		if (segs.length == 2) {
-			// Strip leading segment
-			paths.push(segs[1]);
-		}
 		// Find in cache
 		for (var i = 0, n = paths.length; i < n; i++) {
 			path = paths[i];
