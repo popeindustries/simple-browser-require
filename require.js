@@ -93,4 +93,4 @@
 
 	// Expose
 	root.require = require;
-})(window != null ? window : global);
+})(global || this);
