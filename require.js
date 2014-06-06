@@ -1,3 +1,10 @@
+var root;
+try {
+	root = window;
+} catch (err) {
+	root = global;
+}
+
 (function(root) {
 	// Load or return cached version of requested module with id 'path' or 'path/index'
 	// @param {String} path
@@ -85,4 +92,4 @@
 
 	// Expose
 	root.require = require;
-})(global || this);
+})(root);
