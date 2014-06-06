@@ -1,21 +1,21 @@
+require('../require.js');
 var should = require('should')
-	, brequire = require('../require.js');
-req = global.require
+	, req = global.require;
 
 describe('require', function() {
-	describe('normalize(curr, path)', function() {
+	describe('require.resolve(curr, path)', function() {
 		it('should return the path when absolute', function() {
-			req.normalize('some/path', 'some/other/path').should.eql('some/other/path');
+			req.resolve('some/path', 'some/other/path').should.eql('some/other/path');
 		});
 		it('should return a correctly resolved path when relative \'./\'', function() {
-			req.normalize('some/dir/module', './path').should.eql('some/dir/path');
+			req.resolve('some/dir/module', './path').should.eql('some/dir/path');
 		});
 		it('should return a correctly resolved path when relative \'../\'', function() {
-			req.normalize('some/dir/module', '../path').should.eql('some/path');
-			req.normalize('some/dir/module', '../../path').should.eql('path');
+			req.resolve('some/dir/module', '../path').should.eql('some/path');
+			req.resolve('some/dir/module', '../../path').should.eql('path');
 		});
 	})
-	describe('register(path, fn)', function() {
+	describe('require.register(path, fn)', function() {
 		it('should store a module by it\'s id', function() {
 			req.register('mymodule', function(module, exports, require) {
 				module.exports = 'mymodule';
@@ -79,6 +79,13 @@ describe('require', function() {
 				module.exports = 'foo';
 			});
 			req('./foo').should.eql('foo');
+		});
+		it('should resolve versioned modules when called without version number', function() {
+			req.register('foo@1.0.0', function(module, exports, require) {
+				module.exports = 'foo';
+			});
+			req('foo').should.eql('foo');
+			req('foo@1.0.0').should.eql('foo');
 		});
 		it('should support lazy evaluation of modules as strings', function() {
 			req.register('foo', "module.exports = \'foo\';")

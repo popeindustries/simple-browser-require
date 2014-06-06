@@ -17,8 +17,20 @@
 			m = require.modules[path] || require.modules[path + '/index'];
 			if (m) break;
 		}
+		var m = require.modules[path] || require.modules[path + '/index'];
 		if (!m) {
-			throw "Couldn't find module for: " + path;
+			// Handle versioned modules when called without version number
+			var p, p2, idx;
+			for (var p in require.modules) {
+				if ((idx = p.indexOf('@')) != -1) {
+					p2 = p.slice(0, idx);
+					if (path == p2) {
+						m = require.modules[p];
+						break;
+					}
+				}
+			}
+			if (!m) throw "Couldn't find module for: " + path;
 		}
 		// Instantiate the module if it's export object is not yet defined
 		if (!m.exports) {
