@@ -4,19 +4,11 @@
 	// @return {Object}
 	function require (path) {
 		// Convert relative path to absolute for cases where 'require' has not been resolved
-		// called from outside of a module, for example
+		// For example, called from outside of a module
 		if (!this.module && path.charAt(0) == '.') {
 			path = path.slice((path.indexOf('..') === 0) ? 3 : 2);
 		}
-		// Check with/without root package (need to handle node_modules differently)
-		var paths = [path, path.slice(path.indexOf('/') + 1)]
-			, m;
 		// Find in cache
-		for (var i = 0, n = paths.length; i < n; i++) {
-			path = paths[i];
-			m = require.modules[path] || require.modules[path + '/index'];
-			if (m) break;
-		}
 		var m = require.modules[path] || require.modules[path + '/index'];
 		if (!m) {
 			// Handle versioned modules when called without version number
