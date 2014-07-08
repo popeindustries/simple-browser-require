@@ -1,20 +1,22 @@
 {
-	"name": "simple-browser-require",
-	"description": "A simple, node.js-like require() for the browser.",
-	"version": "0.3.1",
-	"author": "popeindustries <alex@pope-industries.com>",
-	"keywords": ["javascript", "modules", "require"],
-	"dependencies": {},
-	"devDependencies": {
-		"mocha": "*",
-		"should": "3.3.2"
-		},
-	"main": "require.js",
-	"scripts": {
-		"test": "mocha --reporter spec --require should"
-	},
-	"repository": "git://github.com/popeindustries/browser-require.git",
-	"readmefile": "README.md",
-	"readme": "A simple, node.js-like require() for the browser.",
-	"license": "MIT"
+  "name": "simple-browser-require",
+  "description": "A simple, node.js-like require() for the browser.",
+  "version": "0.3.2",
+  "author": "popeindustries <alex@pope-industries.com>",
+  "keywords": ["javascript", "modules", "require", "browser"],
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*",
+    "should": "3.3.2",
+    "uglify-js": "2.4.13"
+    },
+  "main": "require.js",
+  "scripts": {
+    "test": "mocha --reporter spec --require should",
+    "compress": "uglifyjs ./require.js -o ./require.min.js"
+  },
+  "repository": "git://github.com/popeindustries/browser-require.git",
+  "readmefile": "README.md",
+  "readme": "A simple, node.js-like require() for the browser.",
+  "license": "MIT"
 }
