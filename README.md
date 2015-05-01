@@ -1,3 +1,6 @@
+[![NPM Version](https://img.shields.io/npm/v/simple-browser-require.svg?style=flat)](https://npmjs.org/package/simple-browser-require)
+[![Build Status](https://img.shields.io/travis/popeindustries/browser-require.svg?style=flat)](https://travis-ci.org/popeindustries/browser-require)
+
 # simple-browser-require
 
 **simple-browser-require** is a simple, node.js-like ```require()``` for the browser. *It is not an asynchronous script loader*.
