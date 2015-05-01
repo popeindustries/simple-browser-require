@@ -14,7 +14,7 @@
 			// Handle versioned modules when called without version number
 			var p, p2, idx;
 			for (var p in require.modules) {
-				if ((idx = p.indexOf('@')) != -1) {
+				if ((idx = p.indexOf('#')) != -1) {
 					p2 = p.slice(0, idx);
 					if (path == p2) {
 						m = require.modules[p];
