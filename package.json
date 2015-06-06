@@ -8,8 +8,8 @@
   "devDependencies": {
     "mocha": "*",
     "should": "3.3.2",
-    "uglify-js": "2.4.13"
-    },
+    "uglify-js": "2.4.23"
+  },
   "main": "require.js",
   "scripts": {
     "test": "mocha --reporter spec --require should",
