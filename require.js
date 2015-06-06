@@ -1,7 +1,9 @@
 (function(root) {
-	// Load or return cached version of requested module with id 'path' or 'path/index'
-	// @param {String} path
-	// @return {Object}
+	/**
+	 * Load or return cached version of requested module with id 'path' or 'path/index'
+	 * @param {String} path
+	 * @returns {Object}
+	 */
 	function require (path) {
 		// Convert relative path to absolute for cases where 'require' has not been resolved
 		// For example, called from outside of a module
@@ -41,11 +43,13 @@
 	// Cache of module objects
 	require.modules = {};
 
-	// Resolve 'to' an absolute path
-	// @param {String} curr
-	// @param {String} path
-	// @return {String}
-	require.resolve = function(from, to) {
+	/**
+	 * Resolve 'to' an absolute path
+	 * @param {String} from
+	 * @param {String} to
+	 * @returns {String}
+	 */
+	require.resolve = function (from, to) {
 		var fromSegs = from.split('/')
 			, seg;
 
@@ -67,22 +71,27 @@
 		return fromSegs.join('/');
 	};
 
-	// Partial completion of the module's inner 'require' function
-	// @param {String} path
-	// @return {Object}
-	require.relative = function(path) {
-		return function(p) {
+	/**
+	 * Partial completion of the module's inner 'require' function
+	 * @param {String} path
+	 * @returns {Function}
+	 */
+	require.relative = function (path) {
+		return function (p) {
 			return require(require.resolve(path, p));
 		};
 	};
 
-	// Register a module with id of 'path' and callback of 'fn'
-	// @param {String} path
-	// @param {Function} fn [signature should be of type (module, exports, require)]
-	require.register = function(path, fn) {
+	/**
+	 * Register a module with id of 'path' and callback of 'fn'
+	 * @param {String} path
+	 * @param {Function} fn [signature should be of type (module, exports, require)]
+	 */
+	require.register = function (path, fn) {
 		require.modules[path] = fn;
 	};
 
 	// Expose
 	root.require = require;
+
 })((typeof window !== 'undefined') ? window : global);
