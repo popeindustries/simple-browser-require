@@ -15,7 +15,7 @@
     "test": "mocha --reporter spec --require should",
     "compress": "uglifyjs ./require.js -o ./require.min.js"
   },
-  "repository": "git://github.com/popeindustries/browser-require.git",
+  "repository": "git://github.com/popeindustries/simple-browser-require.git",
   "readmefile": "README.md",
   "readme": "A simple, node.js-like require() for the browser.",
   "license": "MIT"
